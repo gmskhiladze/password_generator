@@ -1,0 +1,252 @@
+@import "fonts";
+@import "sizes";
+@import "colors";
+@import "mixins";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: $default-font;
+  color: $default;
+  background-color: $body-bg;
+}
+
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 20px;
+  @include wh($fixed-width, fit-content);
+  @include disp(flex, column, center, center);
+  border-radius: $radius;
+  background-color: $container-bg;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+
+  .header {
+    user-select: none;
+    @include wh($full-width, auto);
+
+    h1 {
+      font-size: $text-l;
+      line-height: $line-height;
+      letter-spacing: $letter-spacing-l;
+    }
+  }
+
+  .actions {
+    position: relative;
+    @include wh(calc(#{$full-width} - 5%), fit-content);
+
+    .output-container {
+      @include wh($full-width, fit-content);
+      @include disp(flex, row, space-between, center);
+      margin: 10px 0px;
+      padding: 20px;
+      background-color: $container-items-bg;
+      border-radius: $radius;
+      border: $border solid $container-items-bg;
+      transition: $transition-dur;
+
+      .output {
+        pointer-events: none;
+        @include wh($full-width, $output-fixed-height);
+        font-size: $text-m;
+        line-height: $line-height-m;
+        letter-spacing: $letter-spacing-xl;
+        color: $default;
+        background: none;
+        border: none;
+        outline: none;
+      }
+
+      .copy-btn {
+        cursor: pointer;
+        position: relative;
+        color: $default;
+        @include wh($btn-width, $btn-height);
+        @include disp(flex, column, center, center);
+        border: none;
+
+        svg {
+          @include wh($full-width, auto);
+          fill: $default;
+          transition: $transition-dur;
+        }
+      }
+
+      .copy-btn:hover {
+        svg {
+          fill: $hover;
+        }
+      }
+    }
+
+    .output-container:hover {
+      border: $border solid $hover;
+    }
+
+    .length {
+      user-select: none;
+      @include disp(flex, column, flex-start, start);
+      margin: 15px 0px;
+      background-color: $container-bg;
+
+      .length-label {
+        user-select: none;
+        margin: 0px 10px;
+        font-size: $text-xxs;
+        opacity: $opa-half;
+
+        .slider-value {
+          opacity: $opa-full;
+        }
+      }
+
+      .length-slider {
+        margin: 5px 0px;
+        padding: 15px 20px;
+        @include wh($full-width, $setting-height);
+        @include disp(flex, row, space-between, center);
+        background-color: $container-items-bg;
+        border-radius: $radius;
+        border: $border solid $container-items-bg;
+        transition: $transition-dur;
+
+        input {
+          cursor: pointer;
+          width: calc(#{$full-width} - 20%);
+          height: $inp-height;
+        }
+      }
+
+      .length-slider:hover {
+        border: $border solid $hover;
+      }
+    }
+
+    .settings {
+      user-select: none;
+      margin: 0px 0px;
+      @include disp(flex, column, space-between, stretch);
+
+      .settings-label {
+        margin: 0px 10px;
+        font-size: $text-xxs;
+        opacity: $opa-half;
+      }
+
+      .setting {
+        margin: 5px 0px;
+        padding: 15px 20px;
+        @include wh($full-width, $setting-height);
+        @include disp(flex, row, space-between, center);
+        background: $container-items-bg;
+        border-radius: $radius;
+        border: $border solid $container-items-bg;
+        transition: $transition-dur;
+
+        label {
+          font-size: $label-text;
+          line-height: $line-height;
+          letter-spacing: $letter-spacing-l;
+        }
+
+        .switch {
+          position: relative;
+          display: inline-block;
+          @include wh($width-switch, $height-switch);
+        }
+
+        .switch input {
+          @include wh($width-none, $height-none);
+          opacity: $opa-none;
+        }
+
+        .slider {
+          cursor: pointer;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: $container-input-unchecked;
+          -webkit-transition: 0.4s;
+          transition: $transition-dur;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          @include wh($width-slider, $height-slider);
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: 0.4s;
+          transition: $transition-dur;
+        }
+
+        input:checked + .slider {
+          background-color: $hover;
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px $hover;
+        }
+
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+
+        .slider.round {
+          border-radius: 34px;
+        }
+
+        .slider.round:before {
+          border-radius: 50%;
+        }
+      }
+
+      .setting:hover {
+        border: $border solid $hover;
+      }
+    }
+
+    .button {
+      @include wh($full-width, fit-content);
+      @include disp(flex, row, center, center);
+
+      input {
+        cursor: pointer;
+        margin: 15px 0px;
+        @include wh($full-width, $width-switch);
+        font-size: $text-xs;
+        font-weight: bold;
+        line-height: $line-height-s;
+        letter-spacing: $letter-spacing-xs;
+        color: $default;
+        background: linear-gradient(
+          90deg,
+          $container-button1 0%,
+          $container-button2 100%
+        );
+        border-radius: $radius;
+        border: none;
+        outline: none;
+        transition: $transition-dur;
+      }
+    }
+
+    .button {
+      input:hover {
+        color: $container-bg;
+      }
+    }
+  }
+}
